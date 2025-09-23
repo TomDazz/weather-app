@@ -1,5 +1,5 @@
 // Base URL for your FastAPI backend
-const BASE_URL = "http://127.0.0.1:8000/weather"; // change if hosted
+const BASE_URL = "http://18.205.18.71:8000/weather/Belfast"; // change if hosted
 
 // Fetch weather data for a given city
 async function fetchWeather(city) {
