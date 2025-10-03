@@ -1,3 +1,5 @@
+This website was a test for my front and back end skills while also testing my skills with AWS 
+
 DEV LOG -
 problem - the website is working using aws EC2 but the api wont work when closed
 solved - using the ran the command linux terminal to run website permantly in the 
