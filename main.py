@@ -10,8 +10,11 @@ app = FastAPI()
 # Allow only my frontend domain to access the API
 origins = [
     "https://www.thomasdalzell.co.uk",
-    "http://www.thomasdalzell.co.uk",  # optional (for testing)
+    "https://thomasdalzell.co.uk",
+    "http://www.thomasdalzell.co.uk",
+    "http://thomasdalzell.co.uk"
 ]
+
 
 app.add_middleware(
     CORSMiddleware,
