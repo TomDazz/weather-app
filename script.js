@@ -7,7 +7,9 @@ async function fetchWeather(city) {
   card.innerHTML = "<p>Loading weather...</p>";
 
   try {
-    const response = await fetch(`${BASE_URL}/${encodeURIComponent(city)}?api_key=1908153cff66fadc3c1d679a24f04d34`);
+    const response = await fetch(
+      `${BASE_URL}/${encodeURIComponent(city)}?api_key=1908153cff66fadc3c1d679a24f04d34`
+    );
 
     if (!response.ok) throw new Error(`Error ${response.status}`);
 
