@@ -3,19 +3,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 from datetime import datetime
+import pytz  # ✅ Added for timezone handling
 
 app = FastAPI()
 
 # Enable CORS so your frontend can access the API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow all origins, or replace with your frontend URL
+    allow_origins=["*"],  # allow all origins, or replace with frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Your Weatherstack API key
+# Weatherstack API key
 API_KEY = "1908153cff66fadc3c1d679a24f04d34"
 
 # API key verification dependency
@@ -67,7 +68,9 @@ def get_weather(city: str):
     if "error" in data:
         raise HTTPException(status_code=500, detail=data["error"].get("info", "Unknown error"))
 
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Get current UK time (auto-adjusts for BST/GMT)
+    uk_tz = pytz.timezone("Europe/London")
+    timestamp = datetime.now(uk_tz).strftime("%Y-%m-%d %H:%M:%S")
 
     return {
         "datetime": timestamp,
