@@ -3,20 +3,25 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 from datetime import datetime
-import pytz  # ✅ Added for timezone handling
+import pytz  # ✅ For timezone handling
 
 app = FastAPI()
 
-# Enable CORS so your frontend can access the API
+# Allow only my frontend domain to access the API
+origins = [
+    "https://www.thomasdalzell.co.uk",
+    "http://www.thomasdalzell.co.uk",  # optional (for testing)
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow all origins, or replace with frontend URL
+    allow_origins=origins,       # Only my domain (replace * if needed)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Weatherstack API key
+# Weatherstack API key 
 API_KEY = "1908153cff66fadc3c1d679a24f04d34"
 
 # API key verification dependency
@@ -28,7 +33,7 @@ def verify_api_key(
     if key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid or missing API Key")
 
-# Simple item example (optional)
+# Simple Pydantic model
 class Item(BaseModel):
     text: str = None
     is_done: bool = False
@@ -37,7 +42,7 @@ items = []
 
 @app.get("/")
 def root():
-    return {"Hello": "World"}
+    return {"message": "API is running successfully!"}
 
 @app.post("/items", dependencies=[Depends(verify_api_key)])
 def create_item(item: Item):
@@ -55,7 +60,7 @@ def get_item(item_id: int) -> Item:
     else:
         raise HTTPException(status_code=404, detail=f"Item {item_id} not found")
 
-# Flexible weather endpoint for any city
+# Weather endpoint for any city
 @app.get("/weather/{city}", dependencies=[Depends(verify_api_key)])
 def get_weather(city: str):
     url = f"http://api.weatherstack.com/current?access_key={API_KEY}&query={city}&units=m"
@@ -68,7 +73,7 @@ def get_weather(city: str):
     if "error" in data:
         raise HTTPException(status_code=500, detail=data["error"].get("info", "Unknown error"))
 
-    # Get current UK time (auto-adjusts for BST/GMT)
+    # Get current UK time (BST/GMT aware)
     uk_tz = pytz.timezone("Europe/London")
     timestamp = datetime.now(uk_tz).strftime("%Y-%m-%d %H:%M:%S")
 

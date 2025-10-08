@@ -1,5 +1,5 @@
 // Base URL for my FastAPI backend
-const BASE_URL = "https://www.thomasdalzell.co.uk/weather";
+const BASE_URL = "https://api.thomasdalzell.co.uk/weather";
 
 // Fetch weather data for a given city
 async function fetchWeather(city) {
