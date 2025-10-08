@@ -27,9 +27,10 @@ API_KEY = "1908153cff66fadc3c1d679a24f04d34"
 # API key verification dependency
 def verify_api_key(
     x_api_key: str = Header(default=None),
-    api_key_query: str = Query(default=None)
+    api_key: str = Query(default=None)
 ):
-    key = x_api_key or api_key_query
+    key = x_api_key or api_key
+    print("🔐 Received API Key:", key)  # <- for logs
     if key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid or missing API Key")
 
