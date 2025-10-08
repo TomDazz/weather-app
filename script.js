@@ -1,5 +1,5 @@
-// Base URL for your FastAPI backend
-const BASE_URL = "http://18.205.18.71:8000/weather"; // ✅ corrected
+// Base URL for my FastAPI backend
+const BASE_URL = "https://www.thomasdalzell.co.uk/weather";
 
 // Fetch weather data for a given city
 async function fetchWeather(city) {
@@ -31,7 +31,6 @@ async function fetchWeather(city) {
   }
 }
 
-// Map weather description to Font Awesome icon
 function getWeatherIcon(description) {
   description = description.toLowerCase();
   if (description.includes("cloud")) return "fas fa-cloud";
@@ -41,7 +40,6 @@ function getWeatherIcon(description) {
   return "fas fa-smog";
 }
 
-// Event listeners for search
 document.getElementById("search-btn").addEventListener("click", () => {
   const city = document.getElementById("city-input").value.trim();
   if (city) fetchWeather(city);
