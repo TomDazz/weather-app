@@ -1,6 +1,7 @@
 This website was a test for my front and back end skills while also testing my skills with AWS
 
 link: thomasdalzell.co.uk
+
 For this i used fastapi and weatherstack to display and get the weather data.
 
 if the site is not loading the weather I may have ran out of my free uses on weatherstack
