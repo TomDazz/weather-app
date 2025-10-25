@@ -12,24 +12,26 @@ async function fetchWeather(city) {
       `${BASE_URL}/${encodeURIComponent(city)}?api_key=1908153cff66fadc3c1d679a24f04d34`
     );
 
-    if (!response.ok) throw new Error(`Error ${response.status}`);
+   if (!response.ok) throw new Error(`Error ${response.status}`);
 
     const data = await response.json();
     const icon = getWeatherIcon(data.weather_descriptions[0]);
+    const wind_mph = (data.wind_speed_kmh * 0.621371).toFixed(1); // ✅ convert to mph
 
     card.innerHTML = `
       <i class="${icon}"></i>
       <h2>${data.location}, ${data.country}</h2>
       <p><strong>${data.temperature_c}°C</strong> - ${data.weather_descriptions[0]}</p>
-      <p>Feels like: ${data.feelslike_c}°C</p>
-      <p>💨 Wind: ${data.wind_speed_kmh} km/h</p>
-      <p>💧 Humidity: ${data.humidity}%</p>
+      <p>Feels like: <strong>${data.feelslike_c}°C</strong></p>
+      <p>💨 Wind: <strong>${wind_mph} mph</strong></p>
+      <p>💧 Humidity: <strong>${data.humidity}%</strong></p>
       <small>${data.datetime}</small>
-    `;
+      `;
   } catch (err) {
     card.innerHTML = `<p style="color:red;">⚠️ Failed to load weather for "${city}"</p>`;
     console.error(err);
   }
+
 }
 
 function getWeatherIcon(description) {
