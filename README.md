@@ -6,6 +6,11 @@ For this i used fastapi and weatherstack to display and get the weather data.
 
 if the site is not loading the weather I may have ran out of my free uses on weatherstack
 
+recent changes:
+added northern irish phrases for example "rain" is now "bucketing it down"
+
+
+
 DEV LOG -
 problem - the website is working using aws EC2 but the api wont work when closed
 solved - using the ran the command linux terminal to run website permantly in the 
