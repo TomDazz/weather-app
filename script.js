@@ -18,15 +18,20 @@ async function fetchWeather(city) {
     const icon = getWeatherIcon(data.weather_descriptions[0]);
     const wind_mph = (data.wind_speed_kmh * 0.621371).toFixed(1); // ✅ convert to mph
 
-    card.innerHTML = `
-      <i class="${icon}"></i>
+  card.innerHTML = `
+    <div style="text-align:center;">
+      <i class="${icon}" style="font-size:48px; margin-bottom:10px;"></i>
       <h2>${data.location}, ${data.country}</h2>
-      <p><strong>${data.temperature_c}°C</strong> - ${data.weather_descriptions[0]}</p>
-      <p>Feels like: <strong>${data.feelslike_c}°C</strong></p>
-      <p>💨 Wind: <strong>${wind_mph} mph</strong></p>
-      <p>💧 Humidity: <strong>${data.humidity}%</strong></p>
-      <small>${data.datetime}</small>
-      `;
+      <div style="font-size:4em; font-weight:bold;">${data.temperature_c}°C</div>
+     <p style="font-size:1.5em; margin-bottom:15px;">${data.weather_descriptions[0]}</p>
+     <p>Feels like: <strong>${data.feelslike_c}°C</strong></p>
+     <p>💨 Wind: <strong>${wind_mph} mph</strong></p>
+     <p>💧 Humidity: <strong>${data.humidity}%</strong></p>
+     <small>${data.datetime}</small>
+    </div>
+  `;
+
+
   } catch (err) {
     card.innerHTML = `<p style="color:red;">⚠️ Failed to load weather for "${city}"</p>`;
     console.error(err);

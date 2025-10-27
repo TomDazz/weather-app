@@ -90,3 +90,8 @@ footer {
 .search-box button:hover {
   background: #005f8a;
 }
+.temp {
+  font-size: 4em;
+  font-weight: bold;
+  margin: 10px 0;
+}
