@@ -15,7 +15,6 @@ origins = [
     "http://thomasdalzell.co.uk"
 ]
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,       # Only my domain (replace * if needed)
@@ -116,32 +115,30 @@ def get_weather(city: str):
         "feelslike_c": data["current"]["feelslike"]
     }
 
-#old code
-#@app.get("/weather/{city}", dependencies=[Depends(verify_api_key)])
-#def get_weather(city: str):
-    url = f"http://api.weatherstack.com/current?access_key={API_KEY}&query={city}&units=m"
-    response = requests.get(url)
-
-    if response.status_code != 200:
-        raise HTTPException(status_code=500, detail="Error fetching weather data")
-
-    data = response.json()
-    if "error" in data:
-        raise HTTPException(status_code=500, detail=data["error"].get("info", "Unknown error"))
-
-    # Get current UK time (BST/GMT aware)
-    uk_tz = pytz.timezone("Europe/London")
-    timestamp = datetime.now(uk_tz).strftime("%Y-%m-%d %H:%M:%S")
-
-    return {
-        "datetime": timestamp,
-        "location": data["location"]["name"],
-        "country": data["location"]["country"],
-        "temperature_c": data["current"]["temperature"],
-        "weather_descriptions": data["current"]["weather_descriptions"],
-        "wind_speed_kmh": data["current"]["wind_speed"],
-        "humidity": data["current"]["humidity"],
-        "feelslike_c": data["current"]["feelslike"]
-    }
-
-
+# old code
+# @app.get("/weather/{city}", dependencies=[Depends(verify_api_key)])
+# def get_weather(city: str):
+#     url = f"http://api.weatherstack.com/current?access_key={API_KEY}&query={city}&units=m"
+#     response = requests.get(url)
+#
+#     if response.status_code != 200:
+#         raise HTTPException(status_code=500, detail="Error fetching weather data")
+#
+#     data = response.json()
+#     if "error" in data:
+#         raise HTTPException(status_code=500, detail=data["error"].get("info", "Unknown error"))
+#
+#     # Get current UK time (BST/GMT aware)
+#     uk_tz = pytz.timezone("Europe/London")
+#     timestamp = datetime.now(uk_tz).strftime("%Y-%m-%d %H:%M:%S")
+#
+#     return {
+#         "datetime": timestamp,
+#         "location": data["location"]["name"],
+#         "country": data["location"]["country"],
+#         "temperature_c": data["current"]["temperature"],
+#         "weather_descriptions": data["current"]["weather_descriptions"],
+#         "wind_speed_kmh": data["current"]["wind_speed"],
+#         "humidity": data["current"]["humidity"],
+#         "feelslike_c": data["current"]["feelslike"]
+#     }
